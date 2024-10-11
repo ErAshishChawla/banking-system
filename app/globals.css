@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+/* Product Page background gradient  */
+.product-page__background-gradient {
+  background: linear-gradient(264.02deg, #ffffff -6.72%, #e5eeff 95.26%);
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
