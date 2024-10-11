@@ -11,8 +11,8 @@ function Page() {
   return (
     <main className="w-screen h-screen">
       <ScrollArea className="w-full h-full product-page__background-gradient">
-        <div className="w-full h-screen max-w-7xl px-8 mx-auto">
-          <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="w-full h-screen max-w-7xl px-8 mx-auto py-4">
+          <div className="w-full h-full flex flex-col justify-center items-center min-h-fit">
             <div className="w-full max-w-4xl flex flex-col items-center gap-8">
               <div className="flex flex-col gap-8 items-center w-full">
                 <div className="flex gap-4 items-center justify-center w-full">
