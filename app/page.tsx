@@ -34,11 +34,11 @@ function Page() {
 
               <div className="w-full flex items-center gap-4 justify-center">
                 <Button className="border-neutral-600 text-black bg-[#F5F5F5] hover:bg-gray-200 transition-colors">
-                  <Link href="/auth/signin">Sign up</Link>
+                  <Link href="/auth/signup">Sign up</Link>
                 </Button>
 
                 <Button className="hover:bg-[rgba(0,118,255,0.9)] bg-[#0070f3] text-white transition-colors">
-                  <Link href="/auth/signup">Sign in</Link>
+                  <Link href="/auth/signin">Sign in</Link>
                 </Button>
               </div>
             </div>
