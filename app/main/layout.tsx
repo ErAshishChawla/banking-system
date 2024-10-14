@@ -1,18 +1,7 @@
-/* 
-This component renders the main layout of the application. It includes the sidebar, mobile navigation, and the main content area.
-
-1. Mobile will show when width is less than 640px.
-2. Sidebar will be short and will show only icons when width is between 640px and 1024px.
-3. Sidebar will be long and will show icons and labels when width is greater than 1024px.
-*/
-
 import React from "react";
-
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import MobileNav from "@/components/MobileNav";
 import SideBar from "@/components/SideBar";
-import MainNavigation from "@/components/MainNavigation";
 
 interface LayoutProps {
   children: React.ReactNode;
