@@ -4,8 +4,9 @@ import Link from "next/link";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Highlight } from "@/components/ui/hero-highlight";
-
 import { Button } from "@/components/ui/button";
+
+import { routes } from "@/constants";
 
 function Page() {
   return (
@@ -34,11 +35,11 @@ function Page() {
 
               <div className="w-full flex items-center gap-4 justify-center">
                 <Button className="border-neutral-600 text-black bg-[#F5F5F5] hover:bg-gray-200 transition-colors">
-                  <Link href="/auth/signup">Sign up</Link>
+                  <Link href={routes.signUp()}>Sign up</Link>
                 </Button>
 
                 <Button className="hover:bg-[rgba(0,118,255,0.9)] bg-[#0070f3] text-white transition-colors">
-                  <Link href="/auth/signin">Sign in</Link>
+                  <Link href={routes.signIn()}>Sign in</Link>
                 </Button>
               </div>
             </div>

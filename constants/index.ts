@@ -1,25 +1,45 @@
+import { RiHome6Line } from "react-icons/ri";
+import { AiOutlineDollarCircle } from "react-icons/ai";
+import { MdOutlineReceiptLong } from "react-icons/md";
+import { TbLocationDollar } from "react-icons/tb";
+import { CiUser } from "react-icons/ci";
+
 export const sidebarLinks = [
   {
-    imgURL: "/icons/home.svg",
-    route: "/",
+    Icon: RiHome6Line,
+    route: "/main",
     label: "Home",
   },
   {
-    imgURL: "/icons/dollar-circle.svg",
-    route: "/my-banks",
+    Icon: AiOutlineDollarCircle,
+    route: "/main/my-banks",
     label: "My Banks",
   },
   {
-    imgURL: "/icons/transaction.svg",
-    route: "/transaction-history",
+    Icon: MdOutlineReceiptLong,
+    route: "/main/transaction-history",
     label: "Transaction History",
   },
   {
-    imgURL: "/icons/money-send.svg",
-    route: "/payment-transfer",
+    Icon: TbLocationDollar,
+    route: "/main/payment-transfer",
     label: "Transfer Funds",
   },
+  {
+    Icon: CiUser,
+    route: "/main/user",
+    label: "User",
+  },
 ];
+
+export const routes = {
+  home: () => "/",
+  myBanks: () => "/my-banks",
+  transactionHistory: () => "/transaction-history",
+  paymentTransfer: () => "/payment-transfer",
+  signIn: () => "/auth/sign-in",
+  signUp: () => "/auth/sign-up",
+};
 
 // good_user / good_password - Bank of America
 export const TEST_USER_ID = "6627ed3d00267aa6fa3e";
