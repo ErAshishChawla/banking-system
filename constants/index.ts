@@ -33,10 +33,10 @@ export const sidebarLinks = [
 ];
 
 export const routes = {
-  home: () => "/",
-  myBanks: () => "/my-banks",
-  transactionHistory: () => "/transaction-history",
-  paymentTransfer: () => "/payment-transfer",
+  home: () => "/main",
+  myBanks: () => "/main/my-banks",
+  transactionHistory: () => "/main/transaction-history",
+  paymentTransfer: () => "/main/payment-transfer",
   signIn: () => "/auth/sign-in",
   signUp: () => "/auth/sign-up",
 };
