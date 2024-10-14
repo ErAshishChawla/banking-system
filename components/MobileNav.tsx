@@ -18,6 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { cn } from "@/lib/utils";
 import { sidebarLinks } from "@/constants";
+import { sanitizePath } from "@/lib/utils";
 
 function MobileNav() {
   const pathname = usePathname();
@@ -71,8 +72,12 @@ function MobileNav() {
             <ScrollArea className="w-full h-[calc(100%_-_4rem)]">
               <div className="w-full h-full flex px-4 flex-col gap-2 pt-12">
                 {sidebarLinks.map(({ route, label, Icon }) => {
+                  const sanitizedRoute = sanitizePath(route);
+                  const sanitizedPathname = sanitizePath(pathname);
                   const isActive =
-                    pathname === route || pathname.startsWith(route);
+                    sanitizedRoute === sanitizedPathname ||
+                    (sanitizedRoute &&
+                      sanitizedPathname.startsWith(sanitizedRoute));
                   return (
                     <Link
                       href={route}

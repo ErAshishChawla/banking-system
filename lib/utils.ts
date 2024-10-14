@@ -193,3 +193,5 @@ export const getTransactionStatus = (date: Date) => {
 
   return date > twoDaysAgo ? "Processing" : "Success";
 };
+
+export const sanitizePath = (path: string) => path.replace(/^\/main/, "");

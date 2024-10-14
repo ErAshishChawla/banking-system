@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { sidebarLinks } from "@/constants";
-import { cn } from "@/lib/utils";
+import { cn, sanitizePath } from "@/lib/utils";
 
 function SideBar() {
   const pathname = usePathname();
@@ -37,7 +37,12 @@ function SideBar() {
         <ScrollArea className="w-full h-full">
           <div className="w-full h-full flex px-4 flex-col gap-4 pt-12 items-center">
             {sidebarLinks.map(({ route, label, Icon }) => {
-              const isActive = pathname === route || pathname.startsWith(route);
+              const sanitizedRoute = sanitizePath(route);
+              const sanitizedPathname = sanitizePath(pathname);
+              const isActive =
+                sanitizedRoute === sanitizedPathname ||
+                (sanitizedRoute &&
+                  sanitizedPathname.startsWith(sanitizedRoute));
               return (
                 <Link
                   href={route}
