@@ -6,6 +6,7 @@ import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { LuLoader2 } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ function SignUpForm() {
       firstName: "",
       lastName: "",
       address1: "",
+      city: "",
       state: "",
       postalCode: "",
       dateOfBirth: "",
@@ -40,13 +42,32 @@ function SignUpForm() {
 
   const onSubmit = async (values: SignupFormValues) => {
     try {
-      const signUpRes = await signUp(values);
-    } catch (error) {}
+      const signupRes = await signUp(values);
+
+      if (!signupRes?.success) {
+        console.log("[SignUpForm] Error", signupRes.error);
+        throw new Error("Sign up failed");
+      }
+
+      const user = signupRes?.data?.user;
+
+      if (!user) {
+        console.log("[SignUpForm] Error", "User not found");
+        throw new Error("Sign up failed");
+      }
+
+      form.reset();
+      toast.success("Sign up successful");
+      router.push(routes.signIn());
+    } catch (error: any) {
+      console.log("[SignUpForm] Error", error);
+      toast.error(error?.message || "Sign up failed");
+    }
   };
 
   return (
     <div className="auth-form">
-      <header className="flex flex-col gap-5 md:gap-8">
+      <header className="flex flex-col gap-5">
         <Link className="flex justify-start items-center w-full gap-2" href="/">
           <Image
             src="/icons/logo.svg"
@@ -60,7 +81,7 @@ function SignUpForm() {
           </div>
         </Link>
 
-        <div className="flex flex-col gap-1 md:gap-3">
+        <div className="flex flex-col gap-1">
           <h1 className="text-24 lg:text-36 font-semibold text-gray-900">
             {user ? "Link Account" : "Sign Up"}
           </h1>
@@ -76,7 +97,10 @@ function SignUpForm() {
       ) : (
         <>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full flex flex-col gap-4"
+            >
               <div className="flex gap-4">
                 <CustomTextInput<SignupFormValues>
                   name="firstName"
@@ -105,6 +129,7 @@ function SignUpForm() {
                 control={form.control}
                 placeholder="Enter your city"
               />
+
               <div className="flex gap-4">
                 <CustomTextInput<SignupFormValues>
                   name="state"

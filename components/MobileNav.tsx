@@ -15,12 +15,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import SignoutFooter from "@/components/SignoutFooter";
 
 import { cn } from "@/lib/utils";
 import { sidebarLinks } from "@/constants";
 import { sanitizePath } from "@/lib/utils";
 
-function MobileNav() {
+interface MobileNavProps {
+  user: User;
+}
+
+function MobileNav({ user }: MobileNavProps) {
   const pathname = usePathname();
 
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
@@ -109,8 +114,8 @@ function MobileNav() {
                 })}
               </div>
             </ScrollArea>
-            <div className="h-16 px-4 w-full flex items-center border-t">
-              <div>Out</div>
+            <div className="h-16 w-full">
+              <SignoutFooter user={user} />
             </div>
           </div>
         </SheetContent>

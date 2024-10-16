@@ -1,9 +1,10 @@
-import React from "react";
+import { cookies } from "next/headers";
 
 import SignInForm from "@/components/SignInForm";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
 
-function Page() {
+async function Page() {
   return (
     <div className="w-full h-full">
       <ScrollArea className="w-full h-full">

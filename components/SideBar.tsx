@@ -6,13 +6,17 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
+import SignoutFooter from "@/components/SignoutFooter";
 
 import { sidebarLinks } from "@/constants";
 import { cn, sanitizePath } from "@/lib/utils";
 
-function SideBar() {
+interface SidebarProps {
+  user: User;
+}
+
+function SideBar({ user }: SidebarProps) {
   const pathname = usePathname();
-  const loggedIn = { firstName: "Ashish", lastName: "Chawla" };
 
   return (
     <aside className="w-full h-full border-r border-gray-200 bg-white">
@@ -75,7 +79,9 @@ function SideBar() {
           </div>
         </ScrollArea>
       </div>
-      <div className="h-16 flex items-center">Out</div>
+      <div className="h-16 flex items-center">
+        <SignoutFooter user={user} />
+      </div>
     </aside>
   );
 }

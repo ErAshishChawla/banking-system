@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { LuLoader2 } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import CustomPasswordInput from "@/components/CustomInputs/CustomPasswordInput";
 import { signinFormSchema, SigninFormValues } from "@/lib/utils";
 import { routes } from "@/constants";
 import { useRouter } from "next/navigation";
+import { signin } from "@/lib/actions/auth/sign-in";
 
 function SignInForm() {
   const router = useRouter();
@@ -31,11 +33,27 @@ function SignInForm() {
 
   const onSubmit = async (values: SigninFormValues) => {
     try {
-      // const signInRes = await signIn(Values);
-      // form.reset();
-      // router.push(routes.home());
+      const signInRes = await signin(values);
+
+      if (!signInRes?.success) {
+        console.log("[SignInForm] Error", signInRes.error);
+        throw new Error("Sign in failed");
+      }
+
+      const user = signInRes?.data?.user;
+
+      if (!user) {
+        console.log("[SignInForm] Error", "User not found");
+        throw new Error("Sign in failed");
+      }
+
+      form.reset();
+      toast.success("Sign in successful");
+      router.push(routes.home());
     } catch (error) {
       console.log("[SignInForm] Error", error);
+
+      toast.error("Sign in failed");
     }
   };
 

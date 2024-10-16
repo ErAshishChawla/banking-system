@@ -216,3 +216,16 @@ export const signupFormSchema = z.object({
   password: z.string().min(8),
 });
 export type SignupFormValues = z.infer<typeof signupFormSchema>;
+
+export function apiResponse(
+  status: number,
+  error?: string | null,
+  data?: { [key: string]: any } | null
+) {
+  return {
+    success: status >= 200 && status < 300,
+    status,
+    error,
+    data,
+  };
+}

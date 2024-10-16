@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ibmPlexSerif, inter } from "@/lib/font";
+import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "Horizon",
@@ -18,7 +19,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${ibmPlexSerif.variable} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

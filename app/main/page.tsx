@@ -1,15 +1,20 @@
+import { redirect } from "next/navigation";
+
 import HeaderBox from "@/components/HeaderBox";
 import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import React from "react";
 
-function Page() {
-  const loggedIn = {
-    firstName: "Ashish",
-    lastName: "Chawla",
-    email: "ashishchawla6500@gmail.com",
-  };
+import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
+import { routes } from "@/constants";
+
+async function Page() {
+  const user = (await getLoggedInUser()) as User | null;
+
+  if (!user) {
+    return redirect(routes.signIn());
+  }
+
   return (
     <section className="w-full h-full flex overflow-x-auto">
       <div className="flex-1 h-full">
@@ -19,7 +24,7 @@ function Page() {
               <HeaderBox
                 type="greeting"
                 title="Welcome"
-                user={loggedIn?.firstName || "Guest"}
+                user={user?.name || "Guest"}
                 subtext="Access and manage your account and transactions efficiently."
               />
 
@@ -35,7 +40,7 @@ function Page() {
         </ScrollArea>
       </div>
       <div className="w-[355px] h-full hidden xl:block">
-        <RightSidebar user={loggedIn} transactions={[]} banks={[{}, {}]} />
+        <RightSidebar user={user} transactions={[]} banks={[{}, {}]} />
       </div>
     </section>
   );

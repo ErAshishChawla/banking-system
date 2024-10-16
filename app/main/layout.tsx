@@ -2,18 +2,27 @@ import React from "react";
 
 import MobileNav from "@/components/MobileNav";
 import SideBar from "@/components/SideBar";
+import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
+import { redirect } from "next/navigation";
+import { routes } from "@/constants";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-function Layout({ children }: LayoutProps) {
+async function Layout({ children }: LayoutProps) {
+  const user = (await getLoggedInUser()) as User | null;
+
+  if (!user) {
+    return redirect(routes.signIn());
+  }
+
   return (
     <main className="w-screen h-screen">
       {/* For Mobile Nav */}
       <div className="block sm:hidden w-full h-full">
         <div className="w-full h-16 shadow-md">
-          <MobileNav />
+          <MobileNav user={user} />
         </div>
         <div className="w-full h-[calc(100%_-_4rem)]">{children}</div>
       </div>
@@ -21,7 +30,7 @@ function Layout({ children }: LayoutProps) {
       {/* For Sidebar */}
       <div className="hidden sm:flex flex-row w-full h-full">
         <div className="sm:w-fit lg:w-[280px]">
-          <SideBar />
+          <SideBar user={user} />
         </div>
         <div className="h-full flex-1">{children}</div>
       </div>
