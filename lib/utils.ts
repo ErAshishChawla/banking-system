@@ -210,7 +210,7 @@ export const signupFormSchema = z.object({
   city: z.string().trim().min(3).max(50),
   state: z.string().trim().min(2).max(2),
   postalCode: z.string().trim().min(3).max(6),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
+  dateOfBirth: z.string().min(1, "Invalid date of birth"),
   ssn: z.string().trim().min(3),
   email: z.string().trim().toLowerCase().email(),
   password: z.string().min(8),

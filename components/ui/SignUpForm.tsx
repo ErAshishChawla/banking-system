@@ -14,6 +14,7 @@ import { Form } from "@/components/ui/form";
 import CustomTextInput from "@/components/CustomInputs/CustomTextInput";
 import CustomPasswordInput from "@/components/CustomInputs/CustomPasswordInput";
 import CustomCalendarInput from "@/components/CustomInputs/CustomCalendar";
+import PlaidLink from "@/components/PlaidLink";
 
 import { signupFormSchema, SignupFormValues } from "@/lib/utils";
 import { signUp } from "@/lib/actions/auth/sign-up";
@@ -42,23 +43,24 @@ function SignUpForm() {
 
   const onSubmit = async (values: SignupFormValues) => {
     try {
-      const signupRes = await signUp(values);
+      console.log("values", values);
+      // const signupRes = await signUp(values);
 
-      if (!signupRes?.success) {
-        console.log("[SignUpForm] Error", signupRes.error);
-        throw new Error("Sign up failed");
-      }
+      // if (!signupRes?.success) {
+      //   console.log("[SignUpForm] Error", signupRes.error);
+      //   throw new Error("Sign up failed");
+      // }
 
-      const user = signupRes?.data?.user;
+      // const user = signupRes?.data?.user;
 
-      if (!user) {
-        console.log("[SignUpForm] Error", "User not found");
-        throw new Error("Sign up failed");
-      }
+      // if (!user) {
+      //   console.log("[SignUpForm] Error", "User not found");
+      //   throw new Error("Sign up failed");
+      // }
 
-      form.reset();
+      // form.reset();
       toast.success("Sign up successful");
-      router.push(routes.signIn());
+      // router.push(routes.signIn());
     } catch (error: any) {
       console.log("[SignUpForm] Error", error);
       toast.error(error?.message || "Sign up failed");
@@ -93,7 +95,9 @@ function SignUpForm() {
         </div>
       </header>
       {user ? (
-        <div className="flex flex-col gap-4">Plaid Link</div>
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant={"primary"} />
+        </div>
       ) : (
         <>
           <Form {...form}>

@@ -1,3 +1,4 @@
+import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
 import Image from "next/image";
 import React from "react";
 
@@ -5,7 +6,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-function Layout({ children }: LayoutProps) {
+async function Layout({ children }: LayoutProps) {
   return (
     <main className="w-screen h-screen flex justify-between font-inter">
       <div className="h-full flex-1">{children}</div>

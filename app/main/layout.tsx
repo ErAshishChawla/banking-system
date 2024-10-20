@@ -5,6 +5,7 @@ import SideBar from "@/components/SideBar";
 import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
 import { redirect } from "next/navigation";
 import { routes } from "@/constants";
+import { getBankAccounts } from "@/lib/actions/user/get-bank-accounts";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ async function Layout({ children }: LayoutProps) {
     return redirect(routes.signIn());
   }
 
+  console.log("user", user);
   return (
     <main className="w-screen h-screen">
       {/* For Mobile Nav */}
