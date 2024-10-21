@@ -21,9 +21,10 @@ import { routes } from "@/constants";
 
 interface SignUpFormProps {
   loggedInUser: User | null;
+  hasBankAccount?: boolean;
 }
 
-function SignUpForm({ loggedInUser }: SignUpFormProps) {
+function SignUpForm({ loggedInUser, hasBankAccount = false }: SignUpFormProps) {
   const [user, setUser] = useState(() => {
     return loggedInUser;
   });
@@ -91,13 +92,13 @@ function SignUpForm({ loggedInUser }: SignUpFormProps) {
             {user ? "Link Account" : "Sign Up"}
           </h1>
           <p className="text-16 font-normal text-gray-600">
-            {user
+            {user && !hasBankAccount
               ? "Link your account to get started"
               : "Please enter your details"}
           </p>
         </div>
       </header>
-      {user ? (
+      {user && !hasBankAccount ? (
         <div className="flex flex-col gap-4">
           <PlaidLink user={user} variant={"primary"} />
         </div>

@@ -17,6 +17,8 @@ function PlaidLink({ user, variant }: PlaidLinkProps) {
         user,
       });
 
+      console.log("[PlaidLink] Success", public_token);
+
       router.push(routes.home());
     },
     [user]

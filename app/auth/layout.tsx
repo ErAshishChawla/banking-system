@@ -1,4 +1,3 @@
-import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
 import Image from "next/image";
 import React from "react";
 

@@ -1,18 +1,25 @@
 import React from "react";
+import { redirect } from "next/navigation";
 
 import MobileNav from "@/components/MobileNav";
 import SideBar from "@/components/SideBar";
-import { getLoggedInUser } from "@/lib/actions/auth/get-logged-in-user";
-import { redirect } from "next/navigation";
+
 import { routes } from "@/constants";
 import { getBankAccounts } from "@/lib/actions/user/get-bank-accounts";
+import { getUserData } from "@/lib/actions/user/get-user-data";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 async function Layout({ children }: LayoutProps) {
-  const user = (await getLoggedInUser()) as User | null;
+  const userDataRes = await getUserData();
+
+  if (!userDataRes?.success) {
+    return redirect(routes.signIn());
+  }
+
+  const user = userDataRes?.data?.user;
 
   if (!user || !user.$id) {
     return redirect(routes.signIn());
