@@ -18,9 +18,11 @@ export async function signUp(values: SignupFormValues) {
   try {
     const sanitizedValues = await signupFormSchema.parseAsync(values);
 
+    const { password, ...userData } = sanitizedValues;
+
     const { account, database } = await createAdminClient();
 
-    const { email, password, firstName, lastName } = sanitizedValues;
+    const { email, firstName, lastName } = userData;
 
     const accountCreationRes = await account.create(
       ID.unique(),
@@ -50,7 +52,8 @@ export async function signUp(values: SignupFormValues) {
       APPWRITE_USER_COLLECTION_ID!,
       ID.unique(),
       {
-        ...sanitizedValues,
+        ...userData,
+        userId: accountCreationRes?.$id,
         dwollaCustomerId,
         dwollaCustomerUrl,
       }

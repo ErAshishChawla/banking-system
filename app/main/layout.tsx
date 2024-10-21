@@ -14,11 +14,22 @@ interface LayoutProps {
 async function Layout({ children }: LayoutProps) {
   const user = (await getLoggedInUser()) as User | null;
 
-  if (!user) {
+  if (!user || !user.$id) {
     return redirect(routes.signIn());
   }
 
-  console.log("user", user);
+  const bankAccountsCountRes = await getBankAccounts({ userId: user?.$id });
+
+  if (!bankAccountsCountRes?.success) {
+    return redirect(routes.signIn());
+  }
+
+  const bankAccountsCount = bankAccountsCountRes?.data?.count;
+
+  if (!bankAccountsCount) {
+    return redirect(routes.signUp());
+  }
+
   return (
     <main className="w-screen h-screen">
       {/* For Mobile Nav */}

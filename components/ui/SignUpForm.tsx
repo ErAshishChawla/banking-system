@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { LuLoader2 } from "react-icons/lu";
@@ -20,9 +19,14 @@ import { signupFormSchema, SignupFormValues } from "@/lib/utils";
 import { signUp } from "@/lib/actions/auth/sign-up";
 import { routes } from "@/constants";
 
-function SignUpForm() {
-  const router = useRouter();
-  const [user, setUser] = useState(null);
+interface SignUpFormProps {
+  loggedInUser: User | null;
+}
+
+function SignUpForm({ loggedInUser }: SignUpFormProps) {
+  const [user, setUser] = useState(() => {
+    return loggedInUser;
+  });
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupFormSchema),
@@ -43,24 +47,23 @@ function SignUpForm() {
 
   const onSubmit = async (values: SignupFormValues) => {
     try {
-      console.log("values", values);
-      // const signupRes = await signUp(values);
+      const signupRes = await signUp(values);
 
-      // if (!signupRes?.success) {
-      //   console.log("[SignUpForm] Error", signupRes.error);
-      //   throw new Error("Sign up failed");
-      // }
+      if (!signupRes?.success) {
+        console.log("[SignUpForm] Error", signupRes.error);
+        throw new Error("Sign up failed");
+      }
 
-      // const user = signupRes?.data?.user;
+      const user = signupRes?.data?.user;
 
-      // if (!user) {
-      //   console.log("[SignUpForm] Error", "User not found");
-      //   throw new Error("Sign up failed");
-      // }
+      if (!user) {
+        console.log("[SignUpForm] Error", "User not found");
+        throw new Error("Sign up failed");
+      }
 
-      // form.reset();
+      form.reset();
       toast.success("Sign up successful");
-      // router.push(routes.signIn());
+      setUser(user);
     } catch (error: any) {
       console.log("[SignUpForm] Error", error);
       toast.error(error?.message || "Sign up failed");
@@ -105,7 +108,7 @@ function SignUpForm() {
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full flex flex-col gap-4"
             >
-              <div className="flex gap-4">
+              <div className="grid grid-cols-2 grid-rows-1 gap-4">
                 <CustomTextInput<SignupFormValues>
                   name="firstName"
                   label="First Name"
@@ -134,7 +137,7 @@ function SignUpForm() {
                 placeholder="Enter your city"
               />
 
-              <div className="flex gap-4">
+              <div className="grid grid-cols-2 grid-rows-1 gap-4">
                 <CustomTextInput<SignupFormValues>
                   name="state"
                   label="State"
@@ -149,7 +152,7 @@ function SignUpForm() {
                 />
               </div>
 
-              <div className="flex gap-4">
+              <div className="grid grid-cols-2 grid-rows-1 gap-4">
                 <CustomCalendarInput<SignupFormValues>
                   name="dateOfBirth"
                   label="Date of Birth"

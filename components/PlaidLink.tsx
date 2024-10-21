@@ -5,16 +5,17 @@ import { Button } from "@/components/ui/button";
 
 import { routes } from "@/constants";
 import { createLinkToken } from "@/lib/actions/plaid/create-link-token";
+import { exchangePublicToken } from "@/lib/actions/plaid/exchangePublicToken";
 
 function PlaidLink({ user, variant }: PlaidLinkProps) {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const onSuccess = useCallback(
     async (public_token: string) => {
-      //   await exchangePublicToken({
-      //     publicToken: public_token,
-      //     user,
-      //   });
+      await exchangePublicToken({
+        publicToken: public_token,
+        user,
+      });
 
       router.push(routes.home());
     },

@@ -37,46 +37,22 @@ function CustomCalendarInput<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <div className="form-item w-full">
+        <div className="form-item">
           <FormItem>
             <FormLabel className="form-label">{label}</FormLabel>
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="w-full flex flex-col">
-                  <FormControl>
-                    <Input
-                      className="input-class"
-                      placeholder={placeholder}
-                      value={
-                        !field.value ? "" : format(field.value, "yyyy-MM-dd")
-                      }
-                      onChange={() => {}}
-                    />
-                  </FormControl>
-                  <FormMessage className="form-message" />
-                </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  className="bg-white"
-                  selected={
-                    field.value
-                      ? DateTime.fromISO(field.value).toJSDate()
-                      : undefined
-                  }
-                  onSelect={(date) => {
-                    if (!date) return;
-                    const isoDate = DateTime.fromJSDate(date).toUTC().toISO();
-                    field.onChange(isoDate);
-                  }}
-                  disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  }
-                  initialFocus
+            <div className="w-full flex flex-col">
+              <FormControl>
+                <Input
+                  className="input-class"
+                  type="date"
+                  placeholder={placeholder}
+                  {...field}
+                  min={"1900-01-01"}
+                  max={format(new Date(), "yyyy-MM-dd")}
                 />
-              </PopoverContent>
-            </Popover>
+              </FormControl>
+              <FormMessage className="form-message" />
+            </div>
           </FormItem>
         </div>
       )}
