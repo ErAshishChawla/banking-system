@@ -5,8 +5,9 @@ import MobileNav from "@/components/MobileNav";
 import SideBar from "@/components/SideBar";
 
 import { routes } from "@/constants";
-import { getBankAccounts } from "@/lib/actions/user/get-bank-accounts";
+import { getBanks } from "@/lib/actions/user/get-banks";
 import { getUserData } from "@/lib/actions/user/get-user-data";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ async function Layout({ children }: LayoutProps) {
     return redirect(routes.signIn());
   }
 
-  const bankAccountsCountRes = await getBankAccounts({ userId: user?.$id });
+  const bankAccountsCountRes = await getBanks({ userId: user?.$id });
 
   if (!bankAccountsCountRes?.success) {
     return redirect(routes.signIn());
@@ -39,6 +40,7 @@ async function Layout({ children }: LayoutProps) {
 
   return (
     <main className="w-screen h-screen">
+      {/* <ScrollArea className="w-full h-full"> */}
       {/* For Mobile Nav */}
       <div className="block sm:hidden w-full h-full">
         <div className="w-full h-16 shadow-md">
@@ -54,6 +56,8 @@ async function Layout({ children }: LayoutProps) {
         </div>
         <div className="h-full flex-1">{children}</div>
       </div>
+      {/* <ScrollBar orientation="horizontal" />
+      </ScrollArea> */}
     </main>
   );
 }

@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { routes } from "@/constants";
 import { createLinkToken } from "@/lib/actions/plaid/create-link-token";
 import { exchangePublicToken } from "@/lib/actions/plaid/exchangePublicToken";
+import { cn } from "@/lib/utils";
+import { MdAddCard } from "react-icons/md";
 
 function PlaidLink({ user, variant }: PlaidLinkProps) {
   const router = useRouter();
@@ -20,6 +22,7 @@ function PlaidLink({ user, variant }: PlaidLinkProps) {
       console.log("[PlaidLink] Success", public_token);
 
       router.push(routes.home());
+      router.refresh();
     },
     [user]
   );
@@ -56,9 +59,26 @@ function PlaidLink({ user, variant }: PlaidLinkProps) {
           Connect Bank
         </Button>
       ) : variant === "ghost" ? (
-        <Button>Connect Bank</Button>
+        <button
+          onClick={() => open()}
+          className="flex gap-3 items-center p-2 md:p-3 2xl:p-4 rounded-lg w-full select-none"
+        >
+          <div className="flex justify-center items-center">
+            <MdAddCard className={cn("w-6 h-6 text-gray-400 select-none")} />
+          </div>
+
+          <p
+            className={cn(
+              "text-16 font-semibold text-black-2 select-none hidden lg:block"
+            )}
+          >
+            Connect Bank
+          </p>
+        </button>
       ) : (
-        <Button></Button>
+        <Button className="" onClick={() => open()}>
+          Connect Bank
+        </Button>
       )}
     </>
   );

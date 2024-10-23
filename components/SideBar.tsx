@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SignoutFooter from "@/components/SignoutFooter";
+import PlaidLink from "@/components/PlaidLink";
 
 import { sidebarLinks } from "@/constants";
 import { cn, sanitizePath } from "@/lib/utils";
@@ -76,6 +77,7 @@ function SideBar({ user }: SidebarProps) {
                 </Link>
               );
             })}
+            <PlaidLink variant="ghost" user={user} />
           </div>
         </ScrollArea>
       </div>

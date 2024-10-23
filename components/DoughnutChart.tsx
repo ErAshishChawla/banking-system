@@ -4,20 +4,25 @@ import React from "react";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { getColorFromString, getRandomHexColor } from "@/lib/utils";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function DoughnutChart({ accounts }: DoughnutChartProps) {
+  const accountNames = accounts.map((account) => account.name);
+  const balances = accounts.map((account) => account.currentBalance);
+  const colors = accounts?.map((account) => getColorFromString(account.id));
+
   const data = {
     datasets: [
       {
         label: "Banks",
-        data: [1250, 2500, 3750],
-        backgroundColor: ["#0747b6", "#2265d8", "#2f91fa"],
+        data: balances,
+        backgroundColor: colors,
         hoverOffset: 4,
       },
     ],
-    labels: ["Bank 1", "Bank 2", "Bank 3"],
+    labels: accountNames,
   };
   return (
     <Doughnut

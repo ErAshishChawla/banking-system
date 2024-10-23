@@ -6,11 +6,11 @@ import { createAdminClient } from "@/lib/server/appwrite";
 import { apiResponse, parseStringify } from "@/lib/utils";
 import { keys } from "@/lib/keys";
 
-interface getBankAccountsProps {
+interface getBanksProps {
   userId: string;
 }
 
-export async function getBankAccounts({ userId }: getBankAccountsProps) {
+export async function getBanks({ userId }: getBanksProps) {
   try {
     const { database } = await createAdminClient();
 
@@ -25,12 +25,12 @@ export async function getBankAccounts({ userId }: getBankAccountsProps) {
 
     return parseStringify(
       apiResponse(200, "Bank accounts fetched", {
-        // bankAccounts: bankAccounts?.documents || [],
+        banks: bankAccounts?.documents || [],
         count: bankAccounts?.total || 0,
       })
     );
   } catch (error) {
-    console.error("[getBankAccounts] Error", error);
+    console.error("[getBanks] Error", error);
     return parseStringify(apiResponse(500, "Failed to fetch bank accounts"));
   }
 }

@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { routes } from "@/constants";
 import { getUserData } from "@/lib/actions/user/get-user-data";
-import { getBankAccounts } from "@/lib/actions/user/get-bank-accounts";
+import { getBanks } from "@/lib/actions/user/get-banks";
 
 async function Page() {
   const getUserRes = await getUserData();
@@ -16,7 +16,7 @@ async function Page() {
   let hasBankAccount = false;
 
   if (user) {
-    const bankAccountsCountRes = await getBankAccounts({ userId: user?.$id });
+    const bankAccountsCountRes = await getBanks({ userId: user?.$id });
 
     const bankAccountsCount = bankAccountsCountRes?.data?.count;
 

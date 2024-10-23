@@ -1,8 +1,11 @@
 /* eslint-disable no-prototype-builtins */
 import { type ClassValue, clsx } from "clsx";
+import ColorHash from "color-hash";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
 import { date, z } from "zod";
+
+const colorHash = new ColorHash();
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -229,3 +232,17 @@ export function apiResponse(
     data,
   };
 }
+
+// Utility function to generate a random hex color
+export const getRandomHexColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
+export const getColorFromString = (str: string) => {
+  return colorHash.hex(str);
+};
